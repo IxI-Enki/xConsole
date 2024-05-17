@@ -37,5 +37,20 @@ namespace xConsole
     {
 
     }
+    #region outdated notes
+    /*
+    string git0 = "\u001b[48;2;1;4;9m\u001b[38;2;132;141;151m                GitHub Color Theme                \u001b[0m";
+    string git1 = "\u001b[48;2;13;17;23m\u001b[38;2;132;141;151m                GitHub Color Theme                \u001b[0m";
+    string git2 = "\u001b[48;2;22;27;34m\u001b[38;2;132;141;151m                GitHub Color Theme                \u001b[0m";
+    Console.Write(git0 + "\n" + git1 + "\n" + git2);
+    */
+    // GITHUB COLORS:
+    // dark  : 1;4;9
+    // medium: 13;17;23
+    // light : 22;27;34
+
+    // grey  : 132;141;151
+    // white : 255;255;255
+    #endregion outdated notes
   }
 }
