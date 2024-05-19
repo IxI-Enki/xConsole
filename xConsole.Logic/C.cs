@@ -74,7 +74,7 @@ using System.Configuration;                         // Configuration management 
 using System.Runtime.CompilerServices;              // Compiler services (e.g., async/await)
 #endregion
 
-namespace Element.Logic
+namespace xConsole
 {
   class C
   {
