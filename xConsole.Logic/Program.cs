@@ -697,8 +697,12 @@ namespace xConsole
       screen.ShadowOrientation.South = true;
       screen.ShadowOrientation.East = true;
 
-      Menu newMenu = new Menu(new Point(5, 4), "New", "Off");
-      //   newMenu.StartPoint = new Point(4, 4);
+      Menu newMenu = new Menu
+        (
+          new Point(6, 4),
+          "New",
+          "Off"
+        );
       Box newBox = new Box()
       {
         BoxSize = new Size(18, 6),
@@ -732,7 +736,7 @@ namespace xConsole
       screen.CreateMenu(newMenu);
       screen.Print();
 
-      newMenu.Loop();
+      newMenu.Loop(screen);
 
       Console.ReadLine();
     }

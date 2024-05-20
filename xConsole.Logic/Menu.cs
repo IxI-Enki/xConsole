@@ -19,7 +19,7 @@ namespace xConsole
 
     #region properties
     public char Char => _cursor;
-    public int MenuHeight => Size.Height;
+    public int MenuHeight => MenuLines.Length;
     public int MenuWidth => Size.Width;
     public Size Size { get; set; }
     public Point StartPoint { get; set; }
@@ -44,6 +44,7 @@ namespace xConsole
 
     public Menu(Point startPoint)
     { StartPoint = startPoint; }
+
     #endregion constructors
     public void AddMenuToScreen(Screen screen)
     {
@@ -59,7 +60,7 @@ namespace xConsole
         hIdx++;
       }
     }
-    public void Loop()
+    public void Loop(Screen screen)
     {
       Console.CursorVisible = false;
       bool run = true;
@@ -69,45 +70,53 @@ namespace xConsole
         {
           ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
-          CheckShortcuts(keyInfo, out bool pressedShortcut, out run);
+          // CheckShortcuts(keyInfo, out bool pressedShortcut, out run);
+          // if (!pressedShortcut)
 
-          if (!pressedShortcut)
-            switch (keyInfo.Key)
-            {
-              //  -  -  -  -  - ↑↑↑ -  -  -  -  -  
-              case ConsoleKey.UpArrow:
-                {
-                  Choice = (Choice < 0) ?
-                        this.MenuHeight - 1 : Choice--;
-                }
-                break;
-              //  -  -  -  -  - ↓↓↓ -  -  -  -  -  
-              case ConsoleKey.DownArrow:
-                {
-                  Choice++;
-                  Choice = (Choice <= this.MenuHeight - 1) ?
-                                                  Choice++ : 0;
-                }
-                break;
-              //  -  -  -  -  -ENTER-  -  -  -  - 
-              case ConsoleKey.Enter:
-                // CheckExecutions(MenuLines[Choice].ExecutionIdx, out run);
-                break;
-              //  -  -  -  -  - ESC -  -  -  -  - 
-              case ConsoleKey.Escape:
-                //  Clear();
-                run = false;
-                return;
-            }
+          switch (keyInfo.Key)
+          {
+            //  -  -  -  -  - ↑↑↑ -  -  -  -  -  
+            case ConsoleKey.UpArrow:
+              {
+                Clear(screen);
+                Choice--;
+                Choice = (Choice < 0) ?
+                      this.MenuHeight - 1 : Choice;
+              }
+              break;
+            //  -  -  -  -  - ↓↓↓ -  -  -  -  -  
+            case ConsoleKey.DownArrow:
+              {
+                Clear(screen);
+                Choice++;
+                Choice = (Choice <= this.MenuHeight - 1) ?
+                                                Choice : 0;
+              }
+              break;
+            //  -  -  -  -  -ENTER-  -  -  -  - 
+            case ConsoleKey.Enter:
+              // CheckExecutions(MenuLines[Choice].ExecutionIdx, out run);
+              break;
+            //  -  -  -  -  - ESC -  -  -  -  - 
+            case ConsoleKey.Escape:
+              //  Clear();
+              run = false;
+              return;
+          }
         }
-        Draw();
+        Draw(screen);
       } while (run);
     }
-
-    public void Draw()
+    public void Clear(Screen screen)
     {
+      screen.ScreenElements[StartPoint.X - 1, StartPoint.Y + Choice].PrintChar = ' ';
 
-
+    }
+    public void Draw(Screen screen)
+    {
+      screen.ScreenElements[StartPoint.X - 1, StartPoint.Y + Choice].PrintChar = _cursor;
+      Console.SetCursorPosition(0, 0);
+      screen.Print(1);
     }
     private void CheckShortcuts(ConsoleKeyInfo keyInfo, out bool pressedShortcut, out bool run)
     {
