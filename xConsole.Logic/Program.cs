@@ -38,7 +38,8 @@ namespace xConsole
   {
     static void Main()
       =>
-    TEST_Menu();
+    TEST_WorkItHarder();
+    // TEST_Menu();
     // TEST_BoxAnimation();
     // TEST_BoxGradientThree();
     // TEST_BoxGradientsTwo();
@@ -53,6 +54,8 @@ namespace xConsole
     // TEST_ElementsColor();
 
     #region TESTS
+
+    #region already done
     //---------------------------------------------------------------------------------------
     static private void TEST_ElementsColor()
     {
@@ -697,13 +700,13 @@ namespace xConsole
       screen.ShadowOrientation.South = true;
       screen.ShadowOrientation.East = true;
 
-      Menu newMenu = new Menu
+      Menu newMenu = new
         (
           new Point(6, 4),
           "New",
-          "Off"
+          "Exit"
         );
-      Box newBox = new Box()
+      Box newBox = new()
       {
         BoxSize = new Size(18, 6),
         StartPoint = new Point(3, 2),
@@ -736,6 +739,66 @@ namespace xConsole
       screen.CreateMenu(newMenu);
       screen.Print();
 
+      newMenu.Loop(screen);
+
+      Console.ReadLine();
+    }
+    #endregion already done
+
+    static void TEST_WorkItHarder()
+    {
+      int width = 31,
+          height = 11;
+
+      Screen screen = new(width, height);
+      screen.ShadowOrientation.South = true;
+      screen.ShadowOrientation.West = true;
+
+      Box newBox = new()
+      {
+        BoxSize = new(width - 6, height - 4),
+        StartPoint = new(3, 1),
+        BoxChars = new(charSet: Box.BoxChar.DoubleCharSet),
+        BoxName = "New Box",
+        NoShadow = false,
+        NoInternalShadow = true,
+        BoxLineColor = new() { RGBValues = C.Presets.GIT_Line },
+        BoxGradient = new
+        (
+          new() { RGBValues = C.Presets.GIT_Dark },
+          new() { RGBValues = C.Presets.GIT_Medium },
+          width + height
+        )
+      };
+      screen.AddBoxToScreen(newBox);
+
+      int internalWidth = 3,
+          internalHeight = 5;
+      Box internalBox = new()
+      {
+        StartPoint = new Point(24, 2),
+        BoxSize = new(internalWidth, internalHeight),
+        BoxName = "-",
+        NoInternalShadow = true,
+        NoShadow = true,
+        BoxChars = new(charSet: Box.BoxChar.RoundedCharSet),
+        BoxLineColor = new() { RGBValues = C.Presets.GIT_Line },
+        BoxGradient = new
+        (
+          new() { RGBValues = C.Presets.GIT_Dark },
+          new() { RGBValues = C.Presets.GIT_Medium },
+          internalWidth + internalHeight
+        )
+      };
+      screen.AddBoxToScreen(internalBox);
+      Menu newMenu = new
+      (
+        new(5, 2),
+        "Point 1",
+        "Point 2"
+      );
+      screen.CreateMenu(newMenu);
+      screen.Print();
       newMenu.Loop(screen);
 
       Console.ReadLine();

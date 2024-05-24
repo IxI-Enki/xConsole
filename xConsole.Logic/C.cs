@@ -215,5 +215,14 @@ namespace xConsole
       private Size _size;
       #endregion fields
     }
+
+    // THEMED VALUES
+    public class Presets
+    {
+      public static int[] GIT_Line = [132, 141, 151],
+                          GIT_Medium = [19, 37, 45],
+                          GIT_Dark = [1, 4, 9];
+    }
+
   }
 }

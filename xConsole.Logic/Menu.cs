@@ -10,14 +10,16 @@ namespace xConsole
   internal class Menu
   {
     #region fields
-    private char _cursor = '>';
+    private char _cursor = '▶';
     private Point _startPoint;
     private Line[]? _menuLines = null;
     private int _choice = 1;
     private Size _size = new Size(1, 1);
+    private C.Color _chosenColor = new C.Color { RGBValues = [0, 255, 0], /*IsForeground = false */};
     #endregion fields
 
     #region properties
+    public C.Color ChosenColor { get => _chosenColor; }
     public char Char => _cursor;
     public int MenuHeight => MenuLines.Length;
     public int MenuWidth => Size.Width;
@@ -110,11 +112,13 @@ namespace xConsole
     public void Clear(Screen screen)
     {
       screen.ScreenElements[StartPoint.X - 1, StartPoint.Y + Choice].PrintChar = ' ';
-
+      screen.ScreenElements[StartPoint.X - 1, StartPoint.Y + Choice].ForegroundColor = new C.Color { RGBValues = [31, 37, 45] };
     }
+
     public void Draw(Screen screen)
     {
       screen.ScreenElements[StartPoint.X - 1, StartPoint.Y + Choice].PrintChar = _cursor;
+      screen.ScreenElements[StartPoint.X - 1, StartPoint.Y + Choice].ForegroundColor = ChosenColor;
       Console.SetCursorPosition(0, 0);
       screen.Print(1);
     }
